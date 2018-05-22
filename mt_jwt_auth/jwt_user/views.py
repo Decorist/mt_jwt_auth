@@ -35,6 +35,10 @@ def jwt_payload_handler(user):
 
 
 def jwt_token_handler(user, session_key):
+    """
+    Returns JWT token for Authorization with user information
+    Takes user instance and session key as parameters
+    """
     # +
     storage = RedisCommonStorage()
     key = str(session_key)
@@ -86,6 +90,9 @@ class ObtainJSONWebToken(BaseJWTAuth):
     http_method_names = ['get']
 
     def get(self, request, *args, **kwargs):
+        """
+        Returns JWT Authorization token for user that is currently logged in
+        """
         user = request.user
         if user.is_authenticated:
             token = jwt_token_handler(user, user.uuid)
@@ -100,6 +107,9 @@ class UserLoginView(BaseJWTAuth):
     http_method_names = ['post']
 
     def post(self, request, *args, **kwargs):
+        """
+        Logs in user and returns JWT token with user information
+        """
         serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid():

@@ -8,3 +8,5 @@ tox
 pytest-django
 
 pytest-cov
+
+Sphinx
